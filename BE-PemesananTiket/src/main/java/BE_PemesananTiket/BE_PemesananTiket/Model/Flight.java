@@ -13,7 +13,7 @@ public class Flight {
     private String flightNumber;
     private String origin;
     private String destination;
-    private LocalDateTime depatureTime;
+    private LocalDateTime departureTime;
     private int availableSeats;
     private double price;
 
@@ -49,12 +49,12 @@ public class Flight {
         this.destination = destination;
     }
 
-    public LocalDateTime getDepatureTime() {
-        return depatureTime;
+    public LocalDateTime getDepartureTime() {
+        return departureTime;
     }
 
-    public void setDepatureTime(LocalDateTime depatureTime) {
-        this.depatureTime = depatureTime;
+    public void setDepartureTime(LocalDateTime departureTime) {
+        this.departureTime = departureTime;
     }
 
     public int getAvailableSeats() {

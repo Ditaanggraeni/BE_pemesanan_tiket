@@ -25,12 +25,12 @@ public class BookingService {
     BookingRepository bookingRepository;
 
     //search flight
-    public List<Flight> searchFlights(String origin, String destination, LocalDateTime depatureDate) {
+    public List<Flight> searchFlights(String origin, String destination, LocalDateTime departureDate) {
         //pencarian untuk rentang waktu 24 jam di sekitar tanggal yang diminta
-        LocalDateTime startTime = depatureDate.toLocalDate().atStartOfDay();
-        LocalDateTime endTime = depatureDate.toLocalDate().atTime(23, 59, 59);
+        LocalDateTime startTime = departureDate.toLocalDate().atStartOfDay();
+        LocalDateTime endTime = departureDate.toLocalDate().atTime(23, 59, 59);
 
-        return flightRepository.findFlight(origin, destination, startTime, endTime);
+        return flightRepository.findByOriginAndDestinationAndDepartureTimeBetween(origin, destination, startTime, endTime);
     }
 
     public Optional<Flight> selectFlight(Long flightId){
@@ -38,10 +38,10 @@ public class BookingService {
     }
 
     @Transactional
-    public Booking saveBooking(Long flightId, Long userId, String passengerName, String contactEmail){
-        if (userService.findById(userId).isEmpty()){
-            throw new RuntimeException("Pengguna dengan ID " + userId + " tidak ditemukan.");
-        }
+    public Booking saveBooking(Long flightId, String passengerName, String contactEmail){
+//        if (userService.findById(userId).isEmpty()){
+//            throw new RuntimeException("Pengguna dengan ID " + userId + " tidak ditemukan.");
+//        }
 
         //get data penerbangan untuk update inventaris
         Flight flight = flightRepository.findById(flightId)
@@ -58,7 +58,7 @@ public class BookingService {
         //create and save booking
         Booking newBooking = new Booking();
         newBooking.setFlightId(flightId);
-        newBooking.setUserId(userId);
+//        newBooking.setUserId(userId);
         newBooking.setBookCode(UUID.randomUUID().toString().substring(0, 6).toLowerCase());
         newBooking.setPassangerName(passengerName);
         newBooking.setEmail(newBooking.getEmail());
